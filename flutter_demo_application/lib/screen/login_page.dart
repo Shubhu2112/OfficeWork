@@ -58,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: txtEmailId,
                     cursorColor: Colors.white,
                     style: TextStyle(color: Colors.white),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -88,6 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: passview,
                     cursorColor: Colors.white,
                     style: TextStyle(color: Colors.white),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       suffixIcon: InkWell(
                         onTap: () {

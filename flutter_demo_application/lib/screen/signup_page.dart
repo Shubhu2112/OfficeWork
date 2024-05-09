@@ -63,12 +63,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: txtUserName,
                     cursorColor: Colors.white,
                     style: TextStyle(color: Colors.white),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(color: Colors.white),
                       ),
                       fillColor: Colors.white10,
+                      
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -89,6 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: txtEmailId,
                     cursorColor: Colors.white,
                     style: TextStyle(color: Colors.white),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -118,7 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     keyboardType: TextInputType.number,
                     controller: txtMobileNo,
                     cursorColor: Colors.white,
-                    //maxLength: 10,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
@@ -149,6 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     obscureText: passview,
                     cursorColor: Colors.white,
                     style: TextStyle(color: Colors.white),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       suffixIcon: InkWell(
                         onTap: () {
@@ -186,6 +190,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     obscureText: conpassview,
                     cursorColor: Colors.white,
                     style: TextStyle(color: Colors.white),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       suffixIcon: InkWell(
                         onTap: () {
