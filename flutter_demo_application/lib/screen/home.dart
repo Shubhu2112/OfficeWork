@@ -1,21 +1,25 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:flutter_demo_application/details_screen.dart';
+import 'package:flutter_demo_application/model/user_details.dart';
+import 'package:flutter_demo_application/screen/details_screen.dart';
 
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  UserDetails userDetails = UserDetails();
+ 
+  MyHomePage({super.key, required this.userDetails});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-  var array = ['Tata Motors','Tata Steel','Reliance','Jio'];
-  var watchList1 = ["YesBank","Idea","AdaniPort","Bajaj-Auto","ApolloHospital"];
-  var watchList2 = ["Axis Bank","BPCL","CIPLA","COALINDIA","GRASIM","FDFCLIFE","JSWSTEEL","KOTAKBANK"];
+ 
+  List<String> stock = ['TATAMOTOR','TATASTEEL','RELIANCE','JIO'];
+  List<int> price = [1232,4343,242,1342,121,332,121,321,1332,1125,7643,6454,5643,236,879,908];
+  var watchList1 = ["YESBANK","ADANIPORT","BAJAJAUTO","APOLLOHOSPITAL"];
+  var watchList2 = ["Axis Bank","BPCL","CIPLA","COALINDIA","GRASIM","HDFCLIFE","JSWSTEEL","KOTAKBANK"];
 
   var horizontalSpacing = SizedBox(width: 10,);
   var verticalSpacing = SizedBox(height: 5,);
@@ -33,15 +37,15 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 86, 108, 231),
               ),
-              accountName: Text("Shubham Pawar"), 
-              accountEmail: Text("shubhamspawar2001@gmail.com"),
+              accountName: Text(widget.userDetails.userName), 
+              accountEmail: Text(widget.userDetails.emailId),
               currentAccountPicture: CircleAvatar(foregroundImage: NetworkImage("https://cdn3d.iconscout.com/3d/premium/thumb/profile-8260859-6581822.png?f=webp")),
             ),
             verticalSpacing,
             ListTile(
               leading: Icon(Icons.home),
               title: Text("Home",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20),),
-              onTap: () {},
+              onTap: () => MyHomePage(userDetails: widget.userDetails),
             ),
             ListTile(
               leading: Icon(Icons.account_box_outlined),
@@ -66,7 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               leading: Icon(Icons.logout_outlined),
               title: Text("LogOut",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20),),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
@@ -77,17 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
        
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
        
-        title: Text(widget.title),
-        flexibleSpace: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 5,right: 8),
-              child: IconButton(
-                onPressed: (){},
-                icon: Icon(Icons.search, size:32,)),
-            ),
+            Text("Stock Market"),
+            Icon(Icons.bar_chart,size: 30,)
           ],
         ),
       ),
@@ -110,8 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              int no = array.length;
-                              array.removeRange(3,no);
+                              int no = stock.length;
+                              stock.removeRange(3,no);
                             });
                           }, 
                           child: Text("WatchList", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              array.addAll(watchList1);
+                              stock.addAll(watchList1);
                             });
                           }, 
                           child: Text("WatchList 1", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),
@@ -129,8 +129,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                int no = array.length;
-                                array.removeRange(6,no);
+                                int no = stock.length;
+                                stock.removeRange(6,no);
                               });
                             }, 
                             child: Text("WatchList 2", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),
@@ -139,20 +139,26 @@ class _MyHomePageState extends State<MyHomePage> {
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  array.addAll(watchList2);
+                                  stock.addAll(watchList2);
                                 });
                               }, 
                               child: Text("WatchList 3", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),
                               )),
                             horizontalSpacing,
-                            watchList(4),
+                            ElevatedButton(
+                              onPressed: () {}, 
+                              child: Text("WatchList 4", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),
+                              )),
                             horizontalSpacing,
-                            watchList(5),
+                            ElevatedButton(
+                              onPressed: () {}, 
+                              child: Text("WatchList 5", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),
+                              )),
                             horizontalSpacing,
                             ElevatedButton(
                               onPressed: (){
                                 setState(() {
-                                  array.add("Adani");
+                                  stock.add("Adani");
                                 });
                               }, 
                               child: Icon(Icons.add_circle_outline_outlined)),
@@ -164,44 +170,39 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           verticalSpacing,
-          Container(
-            width: double.infinity,
-            height: 340,
-            color: const Color.fromARGB(255, 221, 225, 247),
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 232, 234, 245),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.sports_hockey_outlined),
-                      title: Text(array[index].toString()),
-                      trailing: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            img = Image.asset("assets/images/11.jpg",fit: BoxFit.fill);
-                          });
-                        }, 
-                        icon: IconButton(
-                          icon: Icon(Icons.candlestick_chart),
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => StockDetails(),)),)),
-                    ),
-                  ),
-                );
-              },
-              itemCount: array.length,
-              scrollDirection: Axis.vertical,
-            ),
-          ),
-          verticalSpacing,
           Expanded(
             child: Container(
+              width: double.infinity,
+              height: 340,
               color: const Color.fromARGB(255, 221, 225, 247),
-              child: img,
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 232, 234, 245),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: ListTile(
+                        leading: Icon(Icons.candlestick_chart),
+                        title: Text(stock[index].toString()),
+                        subtitle: Text("NSE"),
+                        trailing: Text(price[index].toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),),
+                        onTap: () {
+                          Navigator.push(
+                            context, MaterialPageRoute(
+                              builder: (context) => StockDetails(sName: stock[index].toString(),sPrice: price[index].toString()),
+                            )
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                },
+                itemCount: stock.length,
+                scrollDirection: Axis.vertical,
+              ),
             ),
           ),
           verticalSpacing,
@@ -213,7 +214,9 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: (){}, 
+                  onPressed: (){
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => MyHomePage(userDetails: widget.userDetails),));
+                  }, 
                   child: Icon(Icons.home),
                 ),
                 
@@ -242,14 +245,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
-  }
-
-  Widget watchList(int count) {
-    return ElevatedButton(
-      onPressed: () {
-        
-      }, 
-      child: Text("WatchList $count", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),
-      ));
   }
 }
